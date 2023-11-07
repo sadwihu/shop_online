@@ -15,7 +15,7 @@ public class MybatisGen {
 
     public static void main(String[] args) {
         String path = System.getProperty("user.dir").concat(File.separator).concat("src").concat(File.separator).concat("main")
-                .concat(File.separator).concat("java").concat(File.separator).concat("com").concat(File.separator).concat("soft2242").concat(File.separator).concat("com/soft2242/shop").concat(File.separator);
+                .concat(File.separator).concat("java").concat(File.separator).concat("com").concat(File.separator).concat("soft2242").concat(File.separator).concat("shop").concat(File.separator);
         String pathXml = System.getProperty("user.dir").concat(File.separator).concat("src").concat(File.separator).concat("main")
                 .concat(File.separator).concat("resources").concat(File.separator).concat("mapper");
 
@@ -28,12 +28,12 @@ public class MybatisGen {
         outputFileStringMap.put(OutputFile.xml, pathXml);
         FastAutoGenerator.create("jdbc:mysql://127.0.0.1:3306/shop_online", "root", "QPP6048")
                 .globalConfig(builder -> {
-                    builder.author("ycshang").enableSwagger(); // 设置作者// 开启 swagger 模式
+                    builder.author("sadwihu").enableSwagger(); // 设置作者// 开启 swagger 模式
 
                 })
                 .packageConfig(builder -> {
                     builder.parent("com.soft2242") // 设置父包名
-                            .moduleName("com/soft2242/shop") // 设置父包模块名
+                            .moduleName("shop") // 设置父包模块名
                             .pathInfo(outputFileStringMap);
                     // 设置mapperXml生成路径
                 })
