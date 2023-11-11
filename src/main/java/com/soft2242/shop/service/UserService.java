@@ -1,6 +1,7 @@
 package com.soft2242.shop.service;
 
 import com.soft2242.shop.VO.LoginResultVO;
+import com.soft2242.shop.VO.UserVO;
 import com.soft2242.shop.common.exception.ServerException;
 import com.soft2242.shop.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -22,6 +23,8 @@ public interface UserService extends IService<User> {
 //    @paran userId
 //    @return
     User getUserInfo(Integer userId);
+
+    UserVO editUserInfo(UserVO userVO);
 
 
 //    @Override

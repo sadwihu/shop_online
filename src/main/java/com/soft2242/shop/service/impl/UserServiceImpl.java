@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft2242.shop.VO.LoginResultVO;
 import com.soft2242.shop.VO.UserTokenVO;
+import com.soft2242.shop.VO.UserVO;
 import com.soft2242.shop.common.exception.ServerException;
 import com.soft2242.shop.common.utils.GeneratorCodeUtils;
 import com.soft2242.shop.common.utils.JWTUtils;
@@ -81,5 +82,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new ServerException("用户不存在");
         }
         return user;
+    }
+
+    @Override
+    public UserVO editUserInfo(UserVO userVO) {
+        return null;
     }
 }
