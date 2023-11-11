@@ -69,6 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LoginResultVO userVO = UserConvert.INSTANCE.convertToLoginResultVO(user);
         UserTokenVO tokenVO = new UserTokenVO(userVO.getId());
         String token = JWTUtils.generateToken(JWT_SECRET, tokenVO.toMap());
+        redisService.set(APP_NAME+userVO.getId(),token,APP_TOKEN_EXPIRE_TIME);
         userVO.setToken(token);
         return userVO;
     }
