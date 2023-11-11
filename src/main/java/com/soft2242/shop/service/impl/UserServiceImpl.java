@@ -2,12 +2,16 @@ package com.soft2242.shop.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft2242.shop.VO.LoginResultVO;
 import com.soft2242.shop.VO.UserTokenVO;
 import com.soft2242.shop.VO.UserVO;
 import com.soft2242.shop.common.exception.ServerException;
+import com.soft2242.shop.common.utils.AliyunResource;
+import com.soft2242.shop.common.utils.FileResource;
 import com.soft2242.shop.common.utils.GeneratorCodeUtils;
 import com.soft2242.shop.common.utils.JWTUtils;
 import com.soft2242.shop.convert.UserConvert;
@@ -16,11 +20,18 @@ import com.soft2242.shop.mapper.UserMapper;
 import com.soft2242.shop.query.UserLoginQuery;
 import com.soft2242.shop.service.RedisService;
 import com.soft2242.shop.service.UserService;
-
+import com.soft2242.shop.VO.LoginResultVO;
+import com.soft2242.shop.VO.UserTokenVO;
+import com.soft2242.shop.VO.UserVO;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
 
 import static com.soft2242.shop.common.constant.APIConstant.*;
 
@@ -37,6 +48,8 @@ import static com.soft2242.shop.common.constant.APIConstant.*;
 @AllArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     private final RedisService redisService;
+    private final AliyunResource aliyunResource;
+    private final FileResource fileResource;
     @Override
     public LoginResultVO login(UserLoginQuery query) {
         //  1、获取openId
@@ -70,7 +83,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LoginResultVO userVO = UserConvert.INSTANCE.convertToLoginResultVO(user);
         UserTokenVO tokenVO = new UserTokenVO(userVO.getId());
         String token = JWTUtils.generateToken(JWT_SECRET, tokenVO.toMap());
-        redisService.set(APP_NAME+userVO.getId(),token,APP_TOKEN_EXPIRE_TIME);
+        redisService.set(APP_NAME+userVO.getId(), token, APP_TOKEN_EXPIRE_TIME);
         userVO.setToken(token);
         return userVO;
     }
@@ -78,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User getUserInfo(Integer userId) {
         User user = baseMapper.selectById(userId);
-        if (user == null){
+        if (user==null) {
             throw new ServerException("用户不存在");
         }
         return user;
@@ -86,6 +99,45 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public UserVO editUserInfo(UserVO userVO) {
-        return null;
+        User user = baseMapper.selectById(userVO.getId());
+        if (user==null) {
+            throw new ServerException("用户不存在");
+        }
+        User userConvert = UserConvert.INSTANCE.convert(userVO);
+        updateById(userConvert);
+        return userVO;
     }
+
+    @Override
+    public String editUserAvatar(Integer userId, MultipartFile file) {
+        String endpoint = fileResource.getEndpoint();
+        String accessKeyId = aliyunResource.getAccessKeyId();
+        String accessKeySecret = aliyunResource.getAccessKeySecret();
+
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+        String filename = file.getOriginalFilename();
+        assert filename != null;
+        String[] fileNameArr = filename.split("\\.");
+        String suffix = fileNameArr[fileNameArr.length - 1];
+        String uploadFileName = fileResource.getObjectName() + UUID.randomUUID() + "." + suffix;
+        InputStream inputStream = null;
+        try {
+            inputStream = file.getInputStream();
+        }catch (IOException e){
+            throw new ServerException("文件上传失败");
+        }
+        ossClient.putObject(fileResource.getBucketName(), uploadFileName, inputStream);
+        ossClient.shutdown();
+
+        User user = baseMapper.selectById(userId);
+        if (user==null) {
+            throw new ServerException("用户不存在");
+        }
+        uploadFileName = fileResource.getOssHost() + uploadFileName;
+        user.setAvatar(uploadFileName);
+        baseMapper.updateById(user);
+        return uploadFileName;
+    }
+
+
 }
