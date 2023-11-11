@@ -1,18 +1,50 @@
 package com.soft2242.shop.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.soft2242.shop.VO.LoginResultVO;
+import com.soft2242.shop.common.result.Result;
+import com.soft2242.shop.entity.User;
+import com.soft2242.shop.query.UserLoginQuery;
+import com.soft2242.shop.service.UserService;
+import com.soft2242.shop.VO.LoginResultVO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import static com.soft2242.shop.common.utils.ObtainUserIdUtils.getUserId;
 
 /**
  * <p>
  *  前端控制器
  * </p>
  *
- * @author ycshang
- * @since 2023-11-07
+ * @author sunyu
+ * @since 2023-11-08
  */
+@Tag(name = "用户模块")
 @RestController
-@RequestMapping("/shop/user")
+@RequestMapping("user")
+@AllArgsConstructor
 public class UserController {
 
+    private final UserService userService;
+
+    @Operation(summary = "微信登录")
+    @PostMapping("login/wxMin")
+    public Result<LoginResultVO> wxLogin(@RequestBody @Validated UserLoginQuery query) {
+        LoginResultVO userVO = userService.login(query);
+        return Result.ok(userVO);
+    }
+
+    @Operation(summary = "用户详情")
+    @GetMapping("/profile")
+    private Result<User> getUserInfo(HttpServletRequest request) {
+        Integer userId = getUserId(request);
+        User userInfo = userService.getUserInfo(userId);
+        return Result.ok(userInfo);
+    }
+
 }
+

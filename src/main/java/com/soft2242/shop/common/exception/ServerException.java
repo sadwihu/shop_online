@@ -21,6 +21,7 @@ public class ServerException extends RuntimeException {
     }
     public ServerException( String msg,Throwable e) {
         super( msg,e);
-        this.code = ErrorCode. INTERNAL_SERVER_ERROR. getCode( );this.msg = msg;
+        this.code = ErrorCode. INTERNAL_SERVER_ERROR. getCode( );
+        this.msg = msg;
     }
 }
