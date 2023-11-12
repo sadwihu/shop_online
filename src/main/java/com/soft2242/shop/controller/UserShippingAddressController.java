@@ -57,6 +57,12 @@ public class UserShippingAddressController {
         List<AddressVO> list=userShoppingAddressService.getAddressList(userId);
         return Result.ok(list);
     }
+    @Operation(summary = "收货地址详情")
+    @GetMapping("address/detail")
+    public Result<AddressVO> getAddress(@RequestParam Integer id, HttpServletRequest request) {
+        AddressVO addressVO = userShoppingAddressService.getAddress(id);
+        return Result.ok(addressVO);
+    }
     @Operation(summary = "删除收货地址")
     @DeleteMapping("address")
     public Result deleteAddress(@RequestParam Integer id) {

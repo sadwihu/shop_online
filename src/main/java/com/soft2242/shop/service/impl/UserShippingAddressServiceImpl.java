@@ -65,11 +65,17 @@ public class UserShippingAddressServiceImpl extends ServiceImpl<UserShippingAddr
         return AddressConvert.INSTANCE.convertToAddressVOList(list);
     }
 
-  @Override
-  public AddressVO getAddress(Integer id) {
-    return null;
-  }
-
+    @Override
+    public AddressVO getAddress(Integer id) {
+        UserShippingAddress userShoppingAddress = baseMapper.selectById(id);
+        if (userShoppingAddress == null) {
+            throw new ServerException("地址不存在");
+        }
+        LambdaQueryWrapper<UserShippingAddress> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserShippingAddress::getId, id);
+        UserShippingAddress address = baseMapper.selectOne(wrapper);
+        return AddressConvert.INSTANCE.convertToAddressVO(address);
+    }
     @Override
     public void deleteAddress(Integer id) {
         //逻辑删除,将地址的delete_flag置为1即可
