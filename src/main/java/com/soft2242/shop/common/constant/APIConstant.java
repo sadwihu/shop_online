@@ -23,11 +23,11 @@ public class APIConstant {
     /**
      * APP_ID
      */
-    public static String APP_ID = "wx4236efe5f13cb303";
+    public static String APP_ID = "wx60445db271939336";
     /**
      * APP_SECRET
      */
-    public static String APP_SECRET = "f431ff3c6115ee9e209e36fd8bfaf7bf";
+    public static String APP_SECRET = "9e5e7573a854c52afef0920063ce918d";
     /**
      * 微信调用api接口返回错误code
      */
