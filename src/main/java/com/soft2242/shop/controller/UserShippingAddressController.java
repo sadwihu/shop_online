@@ -57,4 +57,10 @@ public class UserShippingAddressController {
         List<AddressVO> list=userShoppingAddressService.getAddressList(userId);
         return Result.ok(list);
     }
+    @Operation(summary = "删除收货地址")
+    @DeleteMapping("address")
+    public Result deleteAddress(@RequestParam Integer id) {
+        userShoppingAddressService.deleteAddress(id);
+        return Result.ok();
+    }
 }
