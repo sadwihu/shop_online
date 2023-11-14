@@ -20,7 +20,13 @@ public interface UserShoppingAddressService extends IService<UserShippingAddress
     Integer saveShoppingAddress(AddressVO addressVO);
     Integer editShoppingAddress(AddressVO addressVO);
     List<AddressVO> getList(Integer userId);
-    AddressVO getAddress(Integer id);
+    /**
+     *收货地址详情
+     *
+     * @param id
+     * @return
+     */
+    AddressVO getAddressInfo(Integer id);
 
     void deleteAddress(Integer id);
      //添加购物车

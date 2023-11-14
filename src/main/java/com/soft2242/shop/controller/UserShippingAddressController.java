@@ -60,9 +60,12 @@ public class UserShippingAddressController {
     }
     @Operation(summary = "收货地址详情")
     @GetMapping("address/detail")
-    public Result<AddressVO> getAddress(@RequestParam Integer id, HttpServletRequest request) {
-        AddressVO addressVO = userShoppingAddressService.getAddress(id);
-        return Result.ok(addressVO);
+    public Result<AddressVO> getAddressDetail(@RequestParam Integer id, HttpServletRequest request) {
+        if (id == null) {
+            throw new ServerException("请求参数不能为空");
+        }
+        AddressVO addressInfo = userShoppingAddressService.getAddressInfo(id);
+        return Result.ok(addressInfo);
     }
     @Operation(summary = "删除收货地址")
     @DeleteMapping("address")

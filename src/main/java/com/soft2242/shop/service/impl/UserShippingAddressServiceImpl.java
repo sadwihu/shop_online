@@ -72,15 +72,13 @@ public class UserShippingAddressServiceImpl extends ServiceImpl<UserShippingAddr
     }
 
     @Override
-    public AddressVO getAddress(Integer id) {
-        UserShippingAddress userShoppingAddress = baseMapper.selectById(id);
-        if (userShoppingAddress == null) {
+    public AddressVO getAddressInfo(Integer id) {
+        UserShippingAddress userShippingAddress = baseMapper.selectById(id);
+        if (userShippingAddress == null) {
             throw new ServerException("地址不存在");
         }
-        LambdaQueryWrapper<UserShippingAddress> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(UserShippingAddress::getId, id);
-        UserShippingAddress address = baseMapper.selectOne(wrapper);
-        return AddressConvert.INSTANCE.convertToAddressVO(address);
+        AddressVO addressVO = AddressConvert.INSTANCE.convertToAddressVO(userShippingAddress);
+        return addressVO;
     }
     @Override
     public void deleteAddress(Integer id) {
