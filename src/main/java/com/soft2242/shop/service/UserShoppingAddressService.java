@@ -19,7 +19,7 @@ import java.util.List;
 public interface UserShoppingAddressService extends IService<UserShippingAddress> {
     Integer saveShoppingAddress(AddressVO addressVO);
     Integer editShoppingAddress(AddressVO addressVO);
-    List<AddressVO> getAddressList(Integer userId);
+    List<AddressVO> getList(Integer userId);
     AddressVO getAddress(Integer id);
 
     void deleteAddress(Integer id);

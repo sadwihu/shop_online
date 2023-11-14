@@ -50,12 +50,13 @@ public class UserShippingAddressController {
         Integer addressId = userShoppingAddressService.editShoppingAddress(addressVO);
         return Result.ok(addressId);
     }
-    @Operation(summary = "获取收货地址")
-    @GetMapping ("address")
-    public Result<List<AddressVO>> getAddressList (HttpServletRequest request){
+    @Operation(summary = "收货地址列表")
+    @GetMapping("address")
+    public Result<List<AddressVO>> getList(HttpServletRequest request) {
         Integer userId = getUserId(request);
-        List<AddressVO> list=userShoppingAddressService.getAddressList(userId);
+        List<AddressVO> list = userShoppingAddressService.getList(userId);
         return Result.ok(list);
+
     }
     @Operation(summary = "收货地址详情")
     @GetMapping("address/detail")
