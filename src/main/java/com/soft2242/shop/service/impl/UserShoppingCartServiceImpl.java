@@ -72,6 +72,11 @@ implements UserShoppingCartService {
         return list;
     }
 
+    @Override
+    public CartGoodsVO addShopCart(CartQuery query) {
+        return null;
+    }
+
 }
 //查询商品是否存在,以及库存是否充足
 

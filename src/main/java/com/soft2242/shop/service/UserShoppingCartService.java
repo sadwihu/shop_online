@@ -21,4 +21,6 @@ public interface UserShoppingCartService extends IService<UserShoppingCart> {
     CartGoodsVO addshopCart(CartQuery query);
 
     List<CartGoodsVO> shopCartList(Integer userId);
+
+    CartGoodsVO addShopCart(CartQuery query);
 }
