@@ -23,4 +23,6 @@ public interface UserShoppingAddressService extends IService<UserShippingAddress
     AddressVO getAddress(Integer id);
 
     void deleteAddress(Integer id);
+     //添加购物车
+
 }
