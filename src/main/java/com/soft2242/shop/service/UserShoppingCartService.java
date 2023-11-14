@@ -17,16 +17,13 @@ import java.util.List;
  * @since 2023-11-07
  */
 public interface UserShoppingCartService extends IService<UserShoppingCart> {
-    CartGoodsVO addshopcart(CartQuery query);
+    CartGoodsVO addShopCart(CartQuery query);
 
-    CartGoodsVO addshopCart(CartQuery query);
 
     List<CartGoodsVO> shopCartList(Integer userId);
 
-    CartGoodsVO addShopCart(CartQuery query);
-    CartGoodsVO editcart(EditCartQuery query);
-
     CartGoodsVO editCart(EditCartQuery query);
+
     //删除/清空购物车单品
     void removeCartGoods( Integer userId,List<Integer> ids);
     //购物车全选/取消全选

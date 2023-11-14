@@ -32,7 +32,7 @@ public class UserShoppingCartServiceImpl extends ServiceImpl<UserShoppingCartMap
 implements UserShoppingCartService {
     private final GoodsMapper goodsMapper;
    @Override
-    public CartGoodsVO addshopcart(CartQuery query) {
+    public CartGoodsVO addShopCart(CartQuery query) {
         Goods goods = goodsMapper.selectById( query.getId( ));
         if ( goods == null) {
             throw new ServerException("商品信息不存在");
@@ -64,10 +64,7 @@ implements UserShoppingCartService {
             goodsVO.setDiscount( goods. getDiscount());return goodsVO;
 }
 
-    @Override
-    public CartGoodsVO addshopCart(CartQuery query) {
-        return null;
-    }
+
 
 
     @Override
@@ -76,13 +73,10 @@ implements UserShoppingCartService {
         return list;
     }
 
-    @Override
-    public CartGoodsVO addShopCart(CartQuery query) {
-        return null;
-    }
+
 
     @Override
-    public CartGoodsVO editcart(EditCartQuery query) {
+    public CartGoodsVO editCart(EditCartQuery query) {
         UserShoppingCart userShoppingCart = baseMapper.selectById(query.getId());if (userShoppingCart == null){
             throw new ServerException("购物车信息不存在");
         }
@@ -108,10 +102,6 @@ implements UserShoppingCartService {
         return goodsVO;
     }
 
-    @Override
-    public CartGoodsVO editCart(EditCartQuery query) {
-        return null;
-    }
 
     @Override
     public void removeCartGoods(Integer userId, List<Integer> ids) {
@@ -128,7 +118,7 @@ implements UserShoppingCartService {
     }
 
     @Override
-    public void editCartselected(Boolean selected, Integer userId) {
+    public void editCartSelected(Boolean selected, Integer userId) {
         //1、查询用户的购物车列表
         List<UserShoppingCart> cartList = baseMapper.selectList(new LambdaQueryWrapper<UserShoppingCart>
                 ().eq(UserShoppingCart::getUserId,userId));
@@ -140,6 +130,7 @@ implements UserShoppingCartService {
         //  3、数据库数据更新
         saveOrUpdateBatch( cartList);
     }
+
 
 }
 //查询商品是否存在,以及库存是否充足
