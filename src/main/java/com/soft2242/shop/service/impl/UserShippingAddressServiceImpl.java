@@ -81,15 +81,7 @@ public class UserShippingAddressServiceImpl extends ServiceImpl<UserShippingAddr
         return addressVO;
     }
     @Override
-    public void deleteAddress(Integer id) {
-        //将地址的delete_flag置为1即可
-        UserShippingAddress address = baseMapper.selectById(id);
-        if (address == null){
-            throw new ServerException("地址不存在");
-        } else if (Objects.equals(address.getIsDefault(), AddressDefaultEnum.DEFAULT_ADDRESS.getValue())) {
-            throw new ServerException("默认地址不能删除");
-        }else {
-            baseMapper.deleteById(id);
-        }
+    public void removeShippingAddress(Integer id) {
+        removeById(id);
     }
 }

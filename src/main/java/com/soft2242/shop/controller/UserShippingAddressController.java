@@ -69,8 +69,11 @@ public class UserShippingAddressController {
     }
     @Operation(summary = "删除收货地址")
     @DeleteMapping("address")
-    public Result deleteAddress(@RequestParam Integer id) {
-        userShoppingAddressService.deleteAddress(id);
+    public Result removeAddress(@RequestParam Integer id, HttpServletRequest request) {
+        if (id == null) {
+            throw new ServerException("请求参数不能为空");
+        }
+        userShoppingAddressService.removeShippingAddress(id);
         return Result.ok();
     }
 }
