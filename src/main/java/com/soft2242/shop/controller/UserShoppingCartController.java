@@ -1,8 +1,10 @@
 package com.soft2242.shop.controller;
 
 import com.soft2242.shop.VO.CartGoodsVO;
+import com.soft2242.shop.common.exception.ServerException;
 import com.soft2242.shop.common.result.Result;
 import com.soft2242.shop.query.CartQuery;
+import com.soft2242.shop.query.EditCartQuery;
 import com.soft2242.shop.service.UserShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,5 +45,22 @@ public class UserShoppingCartController {
         Integer userId = getUserId(request);
         List<CartGoodsVO> list = userShoppingCartService.shopCartList(userId);
         return Result.ok(list);
+    }
+    @Operation(summary = "修改购物车单品")
+    @PutMapping("edit")
+    public Result<CartGoodsVO> editShopCart(@RequestBody @Validated EditCartQuery query) {
+        CartGoodsVO goodsVO = userShoppingCartService.editCart(query);
+        return Result.ok(goodsVO);
+
+    }
+    @Operation(summary = "删除/清空购物车单品")
+    @DeleteMapping("remove")
+    public Result removeShopCart(@RequestBody List<Integer> ids, HttpServletRequest request) {
+        Integer userId = getUserId(request);
+        if (ids.size() == 0) {
+            throw new ServerException("请选择需要删除的购物车商品");
+        }
+        userShoppingCartService.removeCartGoods(userId, ids);
+        return Result.ok();
     }
 }
