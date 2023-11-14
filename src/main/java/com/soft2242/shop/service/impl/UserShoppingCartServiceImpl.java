@@ -9,7 +9,10 @@ import com.soft2242.shop.mapper.UserShoppingCartMapper;
 import com.soft2242.shop.query.CartQuery;
 import com.soft2242.shop.service.UserShoppingCartService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -20,11 +23,12 @@ import org.springframework.stereotype.Service;
  * @since 2023-11-07
  */
 @Service
-@AllArgsconstructor
+@AllArgsConstructor
+
 public class UserShoppingCartServiceImpl extends ServiceImpl<UserShoppingCartMapper,UserShoppingCart>
 implements UserShoppingCartService {
     private final GoodsMapper goodsMapper;
-    @Override
+   @Override
     public CartGoodsVO addshopcart(CartQuery query) {
         Goods goods = goodsMapper.selectById( query.getId( ));
         if ( goods == null) {
@@ -53,14 +57,21 @@ implements UserShoppingCartService {
             goodsVO.setSelected(userShoppingCart. getSelected( ));
             goodsVO.setStock(goods.getInventory());
             goodsVO.setCount(query.getCount());
-            goodsVO.setPicture( goods. getCover();
+            goodsVO.setPicture( goods. getCover());
             goodsVO.setDiscount( goods. getDiscount());return goodsVO;
 }
 
     @Override
-    public boolean save(UserShoppingCart entity) {
-        return super.save(entity);
+    public CartGoodsVO addshopCart(CartQuery query) {
+        return null;
     }
 
+    @Override
+    public List<CartGoodsVO> shopCartList(Integer userId) {
+        List<CartGoodsVO> list = baseMapper.getCartGoodsInfo(userId);
+        return list;
+    }
+
+}
 //查询商品是否存在,以及库存是否充足
 
