@@ -22,8 +22,6 @@ import java.util.List;
  * <p>
  * 服务实现类
  * </p>
- *
- * @author wg-233
  * @since 2023-11-07
  */
 @Service
