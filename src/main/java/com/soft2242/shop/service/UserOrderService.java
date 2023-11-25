@@ -1,6 +1,7 @@
 package com.soft2242.shop.service;
 
 import com.soft2242.shop.VO.OrderDetailVO;
+import com.soft2242.shop.VO.SubmitOrderVO;
 import com.soft2242.shop.VO.UserOrderVO;
 import com.soft2242.shop.entity.UserOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -27,4 +28,11 @@ public interface UserOrderService extends IService<UserOrder> {
      * @return
      */
     OrderDetailVO getOrderDetail(Integer id);
+    /**
+     * 填写订单 - 获取预付订单
+     *
+     * @param userId
+     * @return
+     */
+    SubmitOrderVO getPreOrderDetail(Integer userId);
 }
