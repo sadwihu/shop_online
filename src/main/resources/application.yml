@@ -11,7 +11,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver       # mysql ??
     url: jdbc:mysql://120.26.47.122:3306/shop_online?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=GMT%2B8 # ?8?
     username: root
-    password: soft@123
+    password: 
     hikari:
       connection-timeout: 30000       # ????????????(??)?????????????????SQLException,??30?
       minimum-idle: 5                 # ?????
