@@ -5,8 +5,10 @@ import com.soft2242.shop.VO.OrderDetailVO;
 import com.soft2242.shop.VO.SubmitOrderVO;
 import com.soft2242.shop.VO.UserOrderVO;
 import com.soft2242.shop.common.exception.ServerException;
+import com.soft2242.shop.common.result.PageResult;
 import com.soft2242.shop.common.result.Result;
 import com.soft2242.shop.query.OrderPreQuery;
+import com.soft2242.shop.query.OrderQuery;
 import com.soft2242.shop.service.UserOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -73,5 +75,12 @@ public class UserOrderController {
         SubmitOrderVO repurchaseOrderDetail = userOrderService.getRepurchaseOrderDetail(id);
         return Result.ok(repurchaseOrderDetail);
     }
-
+    @Operation(summary = "订单列表")
+    @PostMapping("page")
+    public Result<PageResult<OrderDetailVO>> getOrderList(@RequestBody @Validated OrderQuery query, HttpServletRequest request) {
+        Integer userId = getUserId(request);
+        query.setUserId(userId);
+        PageResult<OrderDetailVO> orderList = userOrderService.getOrderList(query);
+        return Result.ok(orderList);
+    }
 }

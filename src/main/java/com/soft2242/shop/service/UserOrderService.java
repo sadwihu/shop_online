@@ -1,19 +1,27 @@
 package com.soft2242.shop.service;
 
-import com.soft2242.shop.VO.OrderDetailVO;
-import com.soft2242.shop.VO.SubmitOrderVO;
-import com.soft2242.shop.VO.UserOrderVO;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.soft2242.shop.common.result.PageResult;
+import com.soft2242.shop.entity.Goods;
 import com.soft2242.shop.entity.UserOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft2242.shop.query.OrderPreQuery;
+import com.soft2242.shop.VO.OrderDetailVO;
+import com.soft2242.shop.VO.SubmitOrderVO;
+import com.soft2242.shop.VO.UserOrderGoodsVO;
+import com.soft2242.shop.VO.UserOrderVO;
+import com.soft2242.shop.query.OrderQuery;
+import io.lettuce.core.dynamic.annotation.Param;
+
+import java.util.List;
 
 /**
  * <p>
  *  服务类
  * </p>
  *
- * @author ycshang
- * @since 2023-11-07
+ * @author sunyu
+ * @since 2023-11-08
  */
 public interface UserOrderService extends IService<UserOrder> {
     /**
@@ -22,6 +30,7 @@ public interface UserOrderService extends IService<UserOrder> {
      * @return
      */
     Integer addGoodsOrder(UserOrderVO orderVO);
+
     /**
      * 订单详情
      *
@@ -29,6 +38,7 @@ public interface UserOrderService extends IService<UserOrder> {
      * @return
      */
     OrderDetailVO getOrderDetail(Integer id);
+
     /**
      * 填写订单 - 获取预付订单
      *
@@ -36,6 +46,7 @@ public interface UserOrderService extends IService<UserOrder> {
      * @return
      */
     SubmitOrderVO getPreOrderDetail(Integer userId);
+
     /**
      * 填写订单 - 获取立即购买订单
      *
@@ -43,6 +54,7 @@ public interface UserOrderService extends IService<UserOrder> {
      * @return
      */
     SubmitOrderVO getPreNowOrderDetail(OrderPreQuery query);
+
     /**
      * 填写订单 - 获取再次购买订单
      *
@@ -50,4 +62,11 @@ public interface UserOrderService extends IService<UserOrder> {
      * @return
      */
     SubmitOrderVO getRepurchaseOrderDetail(Integer id);
+    /**
+     * 订单列表
+     *
+     * @param query
+     * @return
+     */
+    PageResult<OrderDetailVO> getOrderList(OrderQuery query);
 }

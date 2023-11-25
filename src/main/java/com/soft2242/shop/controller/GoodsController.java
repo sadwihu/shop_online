@@ -1,8 +1,5 @@
 package com.soft2242.shop.controller;
 
-import com.soft2242.shop.VO.GoodsVO;
-import com.soft2242.shop.VO.IndexTabRecommendVO;
-import com.soft2242.shop.VO.RecommendGoodsVO;
 import com.soft2242.shop.common.result.PageResult;
 import com.soft2242.shop.common.result.Result;
 import com.soft2242.shop.query.Query;
@@ -19,11 +16,10 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
- * 前端控制器
+ *  前端控制器
  * </p>
  *
- * @author ycshang
- * @since 2023-11-07
+ * @since 2023-11-08
  */
 @Tag(name = "商品模块")
 @RestController
