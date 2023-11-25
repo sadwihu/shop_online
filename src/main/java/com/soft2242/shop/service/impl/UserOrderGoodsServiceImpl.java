@@ -18,9 +18,8 @@ import java.util.List;
  */
 @Service
 public class UserOrderGoodsServiceImpl extends ServiceImpl<UserOrderGoodsMapper, UserOrderGoods> implements UserOrderGoodsService {
-
     @Override
     public void batchUserOrderGoods(List<UserOrderGoods> list) {
-
+        saveBatch(list);
     }
 }
