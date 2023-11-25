@@ -13,6 +13,7 @@ import com.soft2242.shop.VO.UserOrderGoodsVO;
 import com.soft2242.shop.VO.UserOrderVO;
 import com.soft2242.shop.query.OrderQuery;
 import io.lettuce.core.dynamic.annotation.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -77,4 +78,13 @@ public interface UserOrderService extends IService<UserOrder> {
      * @return
      */
     OrderDetailVO cancelOrder(CancelGoodsQuery query);
+    /**
+     * 删除订单
+     *
+     * @param ids
+     */
+
+
+    @Transactional(rollbackFor = Exception.class)
+    void deleteOrder(List<Integer> ids, Integer userId);
 }
