@@ -2,6 +2,7 @@ package com.soft2242.shop.controller;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.soft2242.shop.VO.OrderDetailVO;
+import com.soft2242.shop.VO.OrderLogisticVO;
 import com.soft2242.shop.VO.SubmitOrderVO;
 import com.soft2242.shop.VO.UserOrderVO;
 import com.soft2242.shop.common.exception.ServerException;
@@ -116,5 +117,23 @@ public class UserOrderController {
         }
         userOrderService.payOrder(id);
         return Result.ok();
+    }
+    @Operation(summary = "确认收货")
+    @PutMapping("receipt")
+    public Result<OrderDetailVO> receiptOrder(@RequestParam Integer id) {
+        if (id == null) {
+            throw new ServerException("订单不存在");
+        }
+        OrderDetailVO orderDetailVO = userOrderService.receiptOrder(id);
+        return Result.ok(orderDetailVO);
+    }
+    @Operation(summary = "获取物流信息")
+    @GetMapping("logistics")
+    public Result<OrderLogisticVO> getOrderLogistics(@RequestParam Integer id) {
+        if (id == null) {
+            throw new ServerException("订单不存在");
+        }
+        OrderLogisticVO orderLogistics = userOrderService.getOrderLogistics(id);
+        return Result.ok(orderLogistics);
     }
 }

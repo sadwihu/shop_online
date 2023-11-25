@@ -1,16 +1,13 @@
 package com.soft2242.shop.service;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.soft2242.shop.VO.*;
 import com.soft2242.shop.common.result.PageResult;
 import com.soft2242.shop.entity.Goods;
 import com.soft2242.shop.entity.UserOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft2242.shop.query.CancelGoodsQuery;
 import com.soft2242.shop.query.OrderPreQuery;
-import com.soft2242.shop.VO.OrderDetailVO;
-import com.soft2242.shop.VO.SubmitOrderVO;
-import com.soft2242.shop.VO.UserOrderGoodsVO;
-import com.soft2242.shop.VO.UserOrderVO;
 import com.soft2242.shop.query.OrderQuery;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,4 +96,18 @@ public interface UserOrderService extends IService<UserOrder> {
      * @param id
      */
     void payOrder(Integer id);
+    /**
+     * 确认收货
+     *
+     * @param id
+     * @return
+     */
+    OrderDetailVO receiptOrder(Integer id);
+    /**
+     * 物流订单信息
+     *
+     * @param id
+     * @return
+     */
+    OrderLogisticVO getOrderLogistics(Integer id);
 }
